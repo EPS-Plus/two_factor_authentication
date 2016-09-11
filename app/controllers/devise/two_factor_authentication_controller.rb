@@ -3,6 +3,7 @@ class Devise::TwoFactorAuthenticationController < DeviseController
   before_action :prepare_and_validate, :handle_two_factor_authentication
 
   def show
+    current_user.send_new_otp if current_user.direct_otp
   end
 
   def update
