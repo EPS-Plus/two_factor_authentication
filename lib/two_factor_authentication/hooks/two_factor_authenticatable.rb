@@ -6,7 +6,9 @@ Warden::Manager.after_authentication do |user, auth, options|
   end
 
   if user.respond_to?(:need_two_factor_authentication?) && !bypass_by_cookie
+    p '========'
     if auth.session(options[:scope])[TwoFactorAuthentication::NEED_AUTHENTICATION] = user.need_two_factor_authentication?(auth.request)
+      p '---------'
       user.send_new_otp unless user.totp_enabled?
     end
   end
